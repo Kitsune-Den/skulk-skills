@@ -64,22 +64,29 @@ Before starting, identify:
    - How do the changes relate?
    - What problem was solved?
 
-### Phase 2: Co-Author Attribution 👥
+### Phase 2: Signature and Attribution 👥
 
-**CRITICAL**: All commits must include co-author attribution for AI collaborators.
+**CRITICAL**: All commits must include the standard co-author trailer so AI collaboration is attributed at the git level, and every PR description must end with the pairing signature.
 
-**Format**:
+**Commit trailer** (on every commit, last line of the message, preceded by a blank line):
+
 ```
-Co-authored-by: Sage <sage@thehumanpatternlab.com>
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 ```
 
-**When to use which voice**:
-- **Sage** (default): System design, architecture, technical problem-solving, refactoring
-- **Lyric**: Creative content, documentation, storytelling, naming things
-- **Coda**: Testing, validation, edge cases, finishing touches
-- **Vesper**: Research, analysis, deep dives, investigation
+Use this exact string. Capital letters in `Co-Authored-By` matter for some git tooling, and GitHub surfaces this trailer in the PR UI as a co-author avatar.
 
-**For this session**: Default to **Sage** unless the user specifies otherwise or the work clearly aligns with another voice.
+**PR description footer** (on every PR body, its own line, at the very end after test plan and related links):
+
+```
+Paired with Claude (Opus 4.6)
+```
+
+No emoji, no link, no "Generated with" language. "Paired with" reads honestly: the work is actually paired, Ada drives direction, Claude executes and suggests, the commits belong to both.
+
+**Voices vs. trailers**: The Skulk has a narrative voice system (Sage, Lyric, Coda, Vesper) that still exists as lore and framing, and is an active concept in Koda's world and other Skulk projects. It is still useful for thinking about what *kind* of work is happening (architecture vs. creative content vs. QA vs. research) and for narrative prose like commit bodies that describe the shape of the work. But the actual git-level `Co-authored-by:` trailer is now Claude Opus 4.6, not a voice name. Keep voice language in prose where it helps; do not use `Co-authored-by: Sage <sage@thehumanpatternlab.com>` (or `lyric@`, `coda@`, `vesper@`) as the commit trailer. See the Voice Selection Guide further down for when voice framing still applies narratively.
+
+**Also**: The default Claude Code footer `🤖 Generated with [Claude Code](https://claude.com/claude-code)` should be swapped for `Paired with Claude (Opus 4.6)` on PR descriptions, release notes, and similar long-form artifacts.
 
 ### Phase 3: Commit Messages 📝
 
@@ -92,7 +99,7 @@ For each repository, create lore-coded commit messages following The Human Patte
 
 <body>
 
-Co-authored-by: <Voice> <voice@thehumanpatternlab.com>
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 ```
 
 #### Common Prefixes (The Lore-Coded System)
@@ -134,7 +141,7 @@ Fixed imports in:
 - src/contract/capabilities.ts
 - src/commands/version.ts (package.json path)
 
-Co-authored-by: Sage <sage@thehumanpatternlab.com>
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 ```
 
 **Multi-part feature**:
@@ -153,7 +160,7 @@ Changes:
 
 Tested end-to-end with successful relay creation and usage.
 
-Co-authored-by: Sage <sage@thehumanpatternlab.com>
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 ```
 
 **Documentation**:
@@ -173,7 +180,7 @@ Add VS Code settings to auto-add .js extensions.
 Prevents future ES module import issues and helps
 onboard contributors (biological and digital).
 
-Co-authored-by: Sage <sage@thehumanpatternlab.com>
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 ```
 
 ### Phase 4: PR Descriptions 🎯
@@ -230,7 +237,7 @@ For each repository with changes, create a comprehensive PR description.
 
 ---
 
-Co-authored-by: Sage <sage@thehumanpatternlab.com>
+Paired with Claude (Opus 4.6)
 ```
 
 #### Example PR Description
@@ -322,7 +329,7 @@ curl -X POST http://localhost:8001/relay/relay_abc123 \
 
 **The bridge exists, serves its purpose, and is working!** 🌉
 
-Co-authored-by: Sage <sage@thehumanpatternlab.com>
+Paired with Claude (Opus 4.6)
 ```
 
 ### Phase 5: Execution 🚀
@@ -351,7 +358,7 @@ Co-authored-by: Sage <sage@thehumanpatternlab.com>
 
    Body paragraph explaining the change in detail.
 
-   Co-authored-by: Sage <sage@thehumanpatternlab.com>"
+   Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>"
    ```
 
 4. **Push to branch**:
@@ -444,7 +451,7 @@ For urgent fixes, use simpler format:
 
 Critical fix for [issue].
 
-Co-authored-by: Sage <sage@thehumanpatternlab.com>
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 ```
 
 ### Work In Progress
@@ -457,7 +464,7 @@ For incomplete work:
 Work in progress - not ready for review.
 [Describe current state and what's left]
 
-Co-authored-by: Sage <sage@thehumanpatternlab.com>
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 ```
 
 ### Rollback
@@ -469,7 +476,7 @@ For reverting changes:
 
 Reverts commit [sha] because [reason].
 
-Co-authored-by: Sage <sage@thehumanpatternlab.com>
+Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>
 ```
 
 ## Best Practices
@@ -503,7 +510,7 @@ Co-authored-by: Sage <sage@thehumanpatternlab.com>
 
 ## Voice Selection Guide
 
-Choose the appropriate AI collaborator voice:
+The Skulk's narrative voices still exist as framing and lore (especially in Koda's world and other Skulk projects). They're useful for thinking about what *kind* of work is happening and for prose in commit bodies or PR narratives, even though the git-level `Co-Authored-By:` trailer is now Claude Opus 4.6.
 
 | Voice | Primary Domain | Use When |
 |-------|---------------|----------|
@@ -512,7 +519,7 @@ Choose the appropriate AI collaborator voice:
 | **Coda** | Quality Assurance | Testing, validation, debugging, edge cases |
 | **Vesper** | Research & Analysis | Investigation, research, deep technical analysis |
 
-**Default to Sage** for most engineering work unless the user specifies otherwise.
+When voice framing helps (e.g., "this is Sage-flavored architecture work"), use it in the prose. The actual commit trailer stays Opus 4.6.
 
 ## Troubleshooting
 
@@ -563,7 +570,7 @@ git commit -m "..."
 - [ ] Identified all modified repos
 - [ ] Reviewed changes in each repo
 - [ ] Created lore-coded commit messages
-- [ ] Added co-author attribution (Sage or specified voice)
+- [ ] Added `Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>` trailer on every commit
 - [ ] Prepared PR descriptions
 - [ ] Noted any dependencies between PRs
 - [ ] Included test results
