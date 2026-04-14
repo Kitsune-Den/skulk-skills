@@ -1,47 +1,67 @@
 # skulk-skills
 
-Version-controlled source of truth for the Skulk's personal claude.ai skills.
+Version-controlled source of truth for The Skulk's shared skill library. Skills are loaded by each agent's runtime at startup from their local `workspace/skills/` directory.
 
 ## Why this repo exists
 
-claude.ai's Skills panel lets you edit skills in a web UI, but there's no built-in git history, diffing, or cross-machine source of truth — you edit, Anthropic stores, and the only record is whatever timestamp the UI shows. This repo is where each skill lives as a proper file so changes are:
+Each Skulk agent (Sage, Koda, Vesper, Luna) runs their own standalone runtime with a local skills directory. This repo is the canonical source so skills are:
 
 - **Diffable** — see exactly what changed between versions
 - **Reviewable** — skill edits go through PRs like any other code change
 - **Shareable** — any Skulk member can read, suggest edits, or propose new skills
-- **Recoverable** — if a skill gets broken in the UI, git blame + revert is one command
+- **Recoverable** — if a skill gets broken, git blame + revert is one command
 
 ## Layout
 
 ```
 skills/
   <skill-name>/
-    SKILL.md
+    SKILL.md          # Required — YAML frontmatter + markdown body
+    *.py / *.js       # Optional — helper scripts referenced by the skill
 ```
 
-Each skill is its own directory under `skills/`. The directory name matches the skill's `name:` frontmatter field and the slug shown in the claude.ai Skills panel.
+Each skill is its own directory under `skills/`. The directory name matches the skill's `name:` frontmatter field. Skills are registered by the runtime's skill loader which parses SKILL.md frontmatter for `name` and `description`.
 
-## Workflow
+## Skills
 
-Until Anthropic ships CLI tooling for skill import/export, the sync between this repo and claude.ai is manual copy-paste. The discipline is simple:
+| Skill | Description |
+|-------|-------------|
+| auth-guard | Standardize API credential handling and startup auth checks |
+| frontend-design-ultimate | Production-grade static sites with React, Tailwind, shadcn/ui |
+| git-ritual | The Human Pattern Lab's ceremonial commit and PR process |
+| gmail | Read and send email via Gmail IMAP/SMTP |
+| moltbook | Post and interact on Moltbook social platform |
+| nano-banana-pro-2 | Generate or edit images via Gemini 3 Pro |
+| pinchtab | HTTP-based browser control for AI agents |
+| research | Deep research workflows with source tracking |
+| self-improving-agent | Capture learnings, errors, and corrections for continuous improvement |
+| skulk-email | Read and send email via DreamHost (works from SMTP-blocked VPS) |
+| skulk-mesh | Inter-agent messaging bus for The Skulk collective |
+| skulk-minecraft | Minecraft bot management and interaction |
+| skulk-skill-scanner | Security scanner for agent skills |
+| skulk_activity | Activity digest across The Skulk network |
+| sonoscli | Control Sonos speakers via CLI |
+| thought-to-excalidraw | Visualize PM thoughts into Excalidraw diagrams |
+| x-twitter | Post and interact on X/Twitter |
+| xai-imagegen | Generate images via xAI's image API |
 
-1. **Editing an existing skill:**
-   - Branch off `main`: `git checkout -b update/<skill-name>-<what-changed>`
-   - Edit `skills/<skill-name>/SKILL.md` in the branch
-   - Commit, push, open a PR
-   - After merge, copy the new `SKILL.md` content into the corresponding skill in claude.ai's Skills panel and save
-   - The PR is the authoritative version; claude.ai is the runtime copy
+## Deploying skills
 
-2. **Adding a new skill:**
-   - Branch off `main`: `git checkout -b add/<skill-name>`
-   - Create `skills/<skill-name>/SKILL.md`
-   - Commit, push, open a PR
-   - After merge, create the skill in claude.ai's Skills panel and paste the content
+Copy the skill directory to an agent's workspace skills folder:
 
-3. **A skill was edited in claude.ai first (emergency hotfix):**
-   - Branch off `main`, copy the current claude.ai content into the corresponding file, commit with a message noting it's a back-sync
-   - This keeps git as the authoritative record even when the first edit happened in the UI
+```bash
+# Example: deploy to Sage
+cp -r skills/skulk-mesh ~/sage-bookstacks/skills/
 
-## Skills currently in this repo
+# Example: deploy to Koda
+cp -r skills/skulk-mesh F:\Kodas-Hearth\skills\
+```
 
-See `skills/` for the up-to-date list.
+The agent will pick up new skills on next restart, or when `skills.scan()` is called.
+
+## Contributing
+
+1. Branch off `main`: `git checkout -b add/<skill-name>` or `update/<skill-name>`
+2. Add or edit the skill under `skills/<skill-name>/SKILL.md`
+3. Commit, push, open a PR
+4. After merge, deploy to agents as needed
