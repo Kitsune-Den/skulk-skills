@@ -18,6 +18,29 @@ Execute gitRitual when the user:
 - Asks for commit messages and PR descriptions
 - References finishing a feature or work session
 
+## Start of Work: Branch Hygiene
+
+Before any ritual phase runs, and before the first edit, file create, or code-changing command in a repo, run the three-step branch hygiene dance:
+
+1. `git checkout main`
+2. `git pull` (latest from origin)
+3. `git checkout -b <meaningful-branch-name>`
+
+Only then start editing.
+
+**Why:** starting from whatever branch happens to be checked out risks branching off stale code, piling unrelated work into an existing feature branch, or creating merge mess later. Starting every change from fresh main with its own purpose-named branch keeps history clean and PRs focused on one thing each.
+
+**Branch naming:** describe the change, not the author or date.
+
+- Good: `feat/hero-sticky-bg`, `cleanup/tracked-artifacts`, `fix/miso-panel-vhost`, `add/git-ritual-branch-hygiene`, `update/signature-system`
+- Bad: `ada-work`, `patch-1`, `tmp`, `wip`, `new-stuff`
+
+**One branch per intent.** If the branch needs a second unrelated change, start a second branch. If in doubt, split. The discipline matters more than the ceremony.
+
+**Already on a feature branch from a previous task?** Stop. Go back to main, pull, and branch again. Do not `git checkout -b` off a stale feature branch, it will compound the mess.
+
+**This rule applies to every repo the ritual touches**, not just the "main" one. If a session ends up modifying three repos, each one gets its own three-step dance before its first edit.
+
 ## The Ritual Steps
 
 ### Phase 1: Assessment 🔍
