@@ -12,7 +12,7 @@
 #   webhooks                    List registered webhooks
 #   health                      Status check
 
-MESH_HOST="${SKULK_MESH_HOST:-http://100.67.57.74:3337}"
+MESH_HOST="${SKULK_MESH_HOST:-http://100.110.212.12:3337}"
 
 cmd="$1"
 shift
